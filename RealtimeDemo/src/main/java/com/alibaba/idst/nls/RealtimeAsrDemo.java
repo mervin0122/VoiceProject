@@ -27,11 +27,12 @@ public class RealtimeAsrDemo implements NlsListener {
 	static Logger logger = LoggerFactory.getLogger(RealtimeAsrDemo.class);
 	public String filePath = "src/main/resources/sound_demo.pcm";
 	public String appKey = "nls-service-shurufa16khz";
-	protected String ak_id = "LTAICfPYT9c38HWA";
-	protected String ak_secret = "IjVOsezGbbEdoZnnwxlmYG6NFZlMWY";
+	protected String ak_id = "";
+	protected String ak_secret = "";
 
 	public RealtimeAsrDemo() {
-	}
+	} 
+// 11 LTAICfPYT9c38HWA  22 IjVOsezGbbEdoZnnwxlmYG6NFZlMWY
 
 	public void shutDown() {
 		logger.debug("close NLS client manually!");

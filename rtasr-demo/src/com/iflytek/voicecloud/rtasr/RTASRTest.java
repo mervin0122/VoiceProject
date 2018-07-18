@@ -28,11 +28,11 @@ import java.util.concurrent.CountDownLatch;
  */
 public class RTASRTest {
 
-    // appid
-    private static final String APPID = "5b31b662";
+    // appid 33 5b31b662
+    private static final String APPID = "";
 
-    // appid对应的secret_key
-    private static final String SECRET_KEY = "63fda9ad0b5f0756407da547758a9150";
+    // appid对应的secret_key 44 63fda9ad0b5f0756407da547758a9150
+    private static final String SECRET_KEY = "";
 
     // 请求地址  rtasr.xfyun.cn/v1/ws
     private static final String HOST = "rtasr.xfyun.cn/v1/ws";
