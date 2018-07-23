@@ -14,7 +14,7 @@ import org.apache.commons.codec.binary.Base64;
 public class EncryptUtil {
 
     /**
-     * 加密数字签名（基于HMACSHA1算法）
+     * 实时语音转写：加密数字签名（基于HMACSHA1算法）
      * 
      * @param encryptText
      * @param encryptKey

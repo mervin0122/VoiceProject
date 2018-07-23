@@ -68,7 +68,6 @@
 			<version>${slf4j.version}</version>
 		</dependency>-->
 		<!-- log end -->
-
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

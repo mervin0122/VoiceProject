@@ -21,6 +21,20 @@ import java.util.*;
  */
 public class Test1 {
     @Test
+    public  void vtt(){
+        try {
+            Date a = new Date();
+            Iat iat=new Iat();
+            iat.setFilePath("c:\\temp\\hts00104c3b@ch16ee0ea78a96477400.wav");
+            String url ="http://localhost:8080/voice/vtt" ;
+            //开放平台实时撰写业务，按并发路数收费，鸡棚，一时间允许进行实时撰写的western连接数，单价为2万元路每年
+            String res = HttpClientUtil.getHttpData(url, iat,true);
+            System.out.println(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
     public  void iat(){
         try {
             Date a = new Date();
@@ -61,7 +75,9 @@ public class Test1 {
         try {
             Tts tts =new Tts();
             tts.setAue("raw");
-           tts.setTexts("基于java语言开发的轻量级的中文分词工具包我jklfdfkdjfgjk要去俄罗斯看球赛，我非常高兴的要去俄罗斯看球赛，我非常高兴的要去俄罗斯看球赛，法国夺得冠军");
+           tts.setTexts("如果需要使用实时识别、长语音、唤醒词、语义解析等其它语音功能，请使用Android或者iOS SDK 或 Linux C++ SDK 等，请严格按照文档里描述的参数进行开发，" +
+                   "特别请关注原始录音参数以及语音压缩格式的建议，否则会影响识别率，进而影响到产品的用户体验。法国夺得冠军，我非常高兴的要去俄罗斯看球赛，法国夺得冠军!如果需要使用实时识别、长语音、唤醒词、语义解析等其它语音功能，请使用Android或者iOS SDK 或 Linux C++ SDK 等，请严格按照文档里描述的参数进行开发，" +
+                   "特别请关注原始录音参数以及语音压缩格式的建议，否则会影响识别率，进而影响到产品的用户体验。法国夺得冠军，我非常高兴的要去俄罗斯看球赛，法国夺得冠军");
             String url ="http://localhost:8080/voice/tts" ;
             String res = HttpClientUtil.getHttpData(url, tts,true);
             System.out.println(res);

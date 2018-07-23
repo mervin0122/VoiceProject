@@ -35,6 +35,7 @@
             <artifactId>netty</artifactId>
             <version>3.7.0.Final</version>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>

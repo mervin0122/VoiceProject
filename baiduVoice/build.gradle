@@ -1,0 +1,32 @@
+group 'com.baidu.aip.talker'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile ('org.apache.httpcomponents:httpclient:4.5.3'){
+        exclude group: 'commons-logging'
+    }
+    compile 'org.slf4j:jcl-over-slf4j:1.7.25'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'com.fasterxml.jackson.core:jackson-core:2.8.9'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.9'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
+mainClassName = 'com.baidu.aip.demotest.MainTest'
+applicationDefaultJvmArgs = ["-Djava.library.path=libs"]
+task copyJars(type: Copy) {
+    from configurations.runtime
+    into 'libs/runtime-libs' // 目标位置
+}
