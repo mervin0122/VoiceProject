@@ -25,10 +25,17 @@ public class Test1 {
         try {
             Date a = new Date();
             Iat iat=new Iat();
-            iat.setFilePath("c:\\temp\\hts00104c3b@ch16ee0ea78a96477400.wav");
+            iat.setFilePath("c:\\temp\\test_1.pcm");
             String url ="http://localhost:8080/voice/vtt" ;
             //开放平台实时撰写业务，按并发路数收费，鸡棚，一时间允许进行实时撰写的western连接数，单价为2万元路每年
             String res = HttpClientUtil.getHttpData(url, iat,true);
+            JSONObject obj= JSON.parseObject(res);
+            String statusCode=obj.getString("statusCode");
+            if (statusCode.equals("200")){
+                Date b = new Date();
+                long interval = (b.getTime() - a.getTime())/1000;
+                System.out.println("相差"+interval+"秒");//会打印出相差3秒
+            }
             System.out.println(res);
         } catch (Exception e) {
             e.printStackTrace();

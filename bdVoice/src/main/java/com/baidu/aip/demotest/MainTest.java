@@ -21,6 +21,7 @@ public class MainTest {
 
         // 请等待程序正常退出，即end包发送完成。否则测试用户将导致10分钟内无法正常使用。
          BiccTest.asrOne(controller,dir + "/salesman.pcm");
+        BiccTest.asrOne(controller,dir + "/customer.pcm");
        // BiccTest.asrBoth(controller, dir + "/salesman.pcm", dir + "/customer.pcm");
 
         controller.stop();

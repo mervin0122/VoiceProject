@@ -50,8 +50,9 @@ public class BaiduAipUtils {
    // public void synthesis(AipSpeech client) throws Throwable
     {     AipSpeech client = new AipSpeech(APP_ID, API_KEY, SECRET_KEY);
         // 对本地语音文件进行识别
-        String path = "c:\\temp\\hts002d4c04@ch348b0eb0ece0477600.wav";
-        JSONObject asrRes = client.asr(path, "wav", 16000, null);
+        //String path = "c:\\temp\\hts002d4c04@ch348b0eb0ece0477600.wav";
+        String path = "c:\\temp\\test_1.pcm";
+        JSONObject asrRes = client.asr(path, "pcm", 16000, null);
         System.out.println(asrRes);
 
 
