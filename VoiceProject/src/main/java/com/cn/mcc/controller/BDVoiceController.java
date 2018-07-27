@@ -1,30 +1,18 @@
 package com.cn.mcc.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.baidu.aip.speech.AipSpeech;
-import com.baidu.aip.util.Util;
 import com.cn.mcc.bean.Iat;
-import com.cn.mcc.bean.Tts;
-import com.cn.mcc.service.RTASRService;
-import com.cn.mcc.utils.*;
-import com.cn.mcc.utils.voice.DraftWithOrigin;
-import com.cn.mcc.utils.voice.VoiceUtil;
-import com.cn.mcc.utils.voice.iat.FileUtil;
-import com.cn.mcc.utils.voice.iat.HttpUtil;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
+import com.cn.mcc.utils.BaseController;
+import com.cn.mcc.utils.Constants;
+import com.cn.mcc.utils.Result;
 import org.apache.log4j.Logger;
-import org.java_websocket.WebSocket;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.net.URI;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.concurrent.CountDownLatch;
+
+//import org.json.JSONObject;
 
 /**
  * Created by mervin on 2018/6/25.
@@ -59,21 +47,21 @@ public class BDVoiceController extends BaseController{
             AipSpeech client = new AipSpeech(APP_ID, API_KEY, SECRET_KEY);
             // 对本地语音文件进行识别
            // String path = "c:\\temp\\hts002d4c04@ch348b0eb0ece0477600.wav";
-            org.json.JSONObject asrRes = client.asr(iat.getFilePath(), "pcm", 16000, null);
+            JSONObject asrRes = client.asr(iat.getFilePath(), "pcm", 16000, null);
             System.out.println(asrRes);
 
             // 对语音二进制数据进行识别
-            byte[] datas = Util.readFileByBytes(iat.getFilePath());     //readFileByBytes仅为获取二进制数据示例
-            org.json.JSONObject asrRes2 = client.asr(datas, "pcm", 16000, null);
-            System.out.println(asrRes2);
+            //byte[] datas = Util.readFileByBytes(iat.getFilePath());     //readFileByBytes仅为获取二进制数据示例
+            //org.json.JSONObject asrRes2 = client.asr(datas, "pcm", 16000, null);
+         //  System.out.println(asrRes2);
            // JSONObject obj= JSON.parseObject(asrRes2);
-            System.out.println(asrRes2.getString("result"));
-            System.out.println(asrRes2.getString("err_msg"));
-            if (asrRes2.getString("err_msg").equals("success.")){
-                data=asrRes2.getString("result");
+           // System.out.println(asrRes2.getString("result"));
+           //System.out.println(asrRes2.getString("err_msg"));
+            if (asrRes.getString("err_msg").equals("success.")){
+                data=asrRes.get("result").toString();
                 code="200";
             }else{
-                data=asrRes2.getString("result");
+                data=asrRes.get("result").toString();
             }
 
         }catch (Exception e){

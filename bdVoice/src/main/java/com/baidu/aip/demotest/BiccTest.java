@@ -20,7 +20,7 @@ public class BiccTest {
         // 下面一段为params的设置，仅需要最终识别结果，详细见文档，
         /*
         Map<String, Object> sentenceHandlerParams = new LinkedHashMap<>();
-        sentenceHandlerParams.put("agent", "STANDARD_COMPLETED");
+        sentenceHandlerParams.put("agent", "STANDARD_COMPLETED");//完整句切句：屏蔽掉所有过程句子，只下发完整句。
         sentenceHandlerParams.put("client", "STANDARD_COMPLETED");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("sentenceHandler", sentenceHandlerParams);

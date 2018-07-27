@@ -25,7 +25,7 @@ public class Test1 {
         try {
             Date a = new Date();
             Iat iat=new Iat();
-            iat.setFilePath("c:\\temp\\test_1.pcm");
+            iat.setFilePath("E:\\Git\\VoiceProject\\rtasr-demo\\resource\\sound_demo.pcm");
             String url ="http://localhost:8080/voice/vtt" ;
             //开放平台实时撰写业务，按并发路数收费，鸡棚，一时间允许进行实时撰写的western连接数，单价为2万元路每年
             String res = HttpClientUtil.getHttpData(url, iat,true);
