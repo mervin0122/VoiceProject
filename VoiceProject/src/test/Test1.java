@@ -41,6 +41,7 @@ public class Test1 {
             e.printStackTrace();
         }
     }
+	
     @Test
     public  void vysb(){
         try {
