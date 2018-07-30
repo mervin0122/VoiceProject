@@ -41,6 +41,21 @@ public class Test1 {
             e.printStackTrace();
         }
     }
+	
+    @Test
+    public  void vysb(){
+        try {
+            Date a = new Date();
+            Iat iat=new Iat();
+            iat.setFilePath("msc/655.pcm");
+            String url ="http://localhost:8080/voice/ws" ;
+            //开放平台实时撰写业务，按并发路数收费，鸡棚，一时间允许进行实时撰写的western连接数，单价为2万元路每年
+            String res = HttpClientUtil.getHttpData(url, iat,true);
+            System.out.println(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Test
     public  void iat(){
         try {

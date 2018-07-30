@@ -28,7 +28,6 @@ public class KwsDemo extends RealtimeAsrDemo {
 		super.ak_secret=akSecret;
 		super.appKey=appKey;
 	}
-
 	/**
 	 * kws 只需设置如下参数
 	 */

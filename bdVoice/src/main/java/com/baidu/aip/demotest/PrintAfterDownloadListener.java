@@ -24,6 +24,7 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
     @Override
     public void onReceive(String json) {
         boolean isSuccessed = false;
+        String text="";
         try {
             JsonNode node = objectReader.readTree(json);
             if (node.has("content")) {
@@ -31,7 +32,8 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
                 if (contentNode.has("category")) {
                     String category = contentNode.get("category").asText();
                     if (category.equals("TXT")) {
-                        isSuccessed = parseTxt(contentNode); // 识别结果
+                        text = parseTxt(contentNode); // 识别结果
+                        MainTest.bb(text);
 
                     } else if (category.equals("INTENT")) {
                         isSuccessed = parseIntent(contentNode); // 意图结果
@@ -41,11 +43,12 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (!isSuccessed) {
+     /*   if (!isSuccessed) {
             System.out.println("RESULT receive success :" + json);
 
-        }
+        }*/
     }
+
     // 配置文件中 app.scope = brain_ai_talker 生效
 
     // {"content": {"category": "INTENT", "content": "\u6765\u610f\u8bf4\u660e", "callId": "s1-ASR-34804-1-1530090052495",
@@ -73,9 +76,11 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
     // "triggerTxt": "\u6270\u5230\u60a8\u5462\u8fd9\u8fb9\u662f\u4fe1\u7528\u5361"}, "name": "knowledge_content",
     // "callId": "s1-ASR-34804-1-1530090052495", "userId": 15137876, "logid": "a2815ab2-79e8-11e8-b871-6c92bf139ec6",
     // "appId": 10811527}
-    private boolean parseTxt(JsonNode node) throws IOException {
+    private String parseTxt(JsonNode node) throws IOException {
+        //private boolean parseTxt(JsonNode node) throws IOException {
+        String text="";
         if (node.has("roleCategory") && node.has("content")) {
-            String text = node.get("roleCategory").asText() + " ";
+             text = node.get("roleCategory").asText() + " ";
             if (node.has("extJson")) {
                 JsonNode nodeExt = node.get("extJson");
                 if (nodeExt.has("completed")) {
@@ -88,9 +93,10 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
             }
             text += "识别结果：" + node.get("content").asText();
             System.out.println(text);
-            return true;
+           // return true;
         }
-        return false;
+       // return false;
+        return text;
     }
 
     @Override

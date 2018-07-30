@@ -2,10 +2,8 @@ package com.cn.mcc.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cn.mcc.bean.Employee;
 import com.cn.mcc.bean.Iat;
 import com.cn.mcc.bean.Tts;
-import com.cn.mcc.service.EmployeeService;
 import com.cn.mcc.service.RTASRService;
 import com.cn.mcc.utils.*;
 import com.cn.mcc.utils.voice.DraftWithOrigin;
@@ -15,7 +13,6 @@ import com.cn.mcc.utils.voice.iat.HttpUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.java_websocket.WebSocket;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -176,7 +173,7 @@ public class VoiceController extends BaseController{
                 Thread.sleep(1000);
             }
 
-            // 发送音频
+            // 发送音频 服务端获取音频流（判断是否有获取到音频流，有则调用此接口，接受端则处理内容然后返回结果）
             byte[] bytes = new byte[CHUNCKED_SIZE];
             try (RandomAccessFile raf = new RandomAccessFile(iat.getFilePath(), "r")) {
                 int len = -1;
