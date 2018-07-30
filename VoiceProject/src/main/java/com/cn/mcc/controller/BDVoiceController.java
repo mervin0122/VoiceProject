@@ -10,6 +10,7 @@ import com.cn.mcc.bean.Iat;
 import com.cn.mcc.utils.BaseController;
 import com.cn.mcc.utils.Constants;
 import com.cn.mcc.utils.Result;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,8 @@ import java.util.Properties;
  * Created by mervin on 2018/6/25.
  */
 @RestController
-public class BDVoiceController extends BaseController{
+public class BDVoiceController extends BaseController {
     public  final  static Logger logger=Logger.getLogger(VoiceController.class);
-
     //设置APPID/AK/SK
     public static final String APP_ID = "11572625";
     public static final String API_KEY = "t5fTe2YN25P36FYMnBTQcUga";
@@ -35,6 +35,10 @@ public class BDVoiceController extends BaseController{
 
     // 音频文件路径
     // private static final String AUDIO_PATH = "./resource/test_1.pcm";
+      public  String parseTxt(JsonNode node) throws IOException {
+         return  new PrintAfterDownloadListener().parseTxt(node);
+      }
+
 
     @RequestMapping(value="/voice/vysb",method = RequestMethod.POST)
     @ResponseBody
@@ -42,7 +46,6 @@ public class BDVoiceController extends BaseController{
         String code="0";
         String msg="";
         String data="";
-        String analys="";
         try{
             System.out.println("请等待程序正常退出， 否则测试用户将导致10分钟内无法正常使用。");
           //  String dir = "src/test/resources/pcm";
@@ -56,8 +59,8 @@ public class BDVoiceController extends BaseController{
             // 请等待程序正常退出，即end包发送完成。否则测试用户将导致10分钟内无法正常使用。
             BiccTest.asrOne(controller,iat.getFilePath());
            // BiccTest.asrOne(controller,dir + "/8k_test.pcm");
-            // BiccTest.asrOne(controller,dir + "/customer.pcm");
             // BiccTest.asrBoth(controller, dir + "/salesman.pcm", dir + "/customer.pcm");
+
             controller.stop();
 
         }catch (Exception e){
@@ -67,6 +70,7 @@ public class BDVoiceController extends BaseController{
         return  result(code,msg,data);
 
     }
+
     public static void main(String[] args) throws Exception {
 
         System.out.println("请等待程序正常退出， 否则测试用户将导致10分钟内无法正常使用。");

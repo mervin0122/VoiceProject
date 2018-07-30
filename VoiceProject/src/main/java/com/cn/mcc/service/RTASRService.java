@@ -138,7 +138,7 @@ public class RTASRService {
                 System.out.println(getCurrentTimeStr() + "\t握手成功！sid: " + msgObj.getString("sid"));
             } else if (Objects.equals("result", action)) {
                 // 转写结果
-                contents(getContent(msgObj.getString("data")));
+                 contents(getContent(msgObj.getString("data")));
                 System.out.println(getCurrentTimeStr() + "\tresult: " + getContent(msgObj.getString("data")));
                 //System.out.println("result: " + msgObj.getString("data"));
             } else if (Objects.equals("error", action)) {

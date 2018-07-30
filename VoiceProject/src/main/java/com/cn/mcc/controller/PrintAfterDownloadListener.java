@@ -33,8 +33,7 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
                     String category = contentNode.get("category").asText();
                     if (category.equals("TXT")) {
                         text = parseTxt(contentNode); // 识别结果
-                        //MainTest.bb(text);
-
+                       // text = BDVoiceController.parseTxt(contentNode); // 识别结果
                     } else if (category.equals("INTENT")) {
                         isSuccessed = parseIntent(contentNode); // 意图结果
                     }
@@ -76,7 +75,7 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
     // "triggerTxt": "\u6270\u5230\u60a8\u5462\u8fd9\u8fb9\u662f\u4fe1\u7528\u5361"}, "name": "knowledge_content",
     // "callId": "s1-ASR-34804-1-1530090052495", "userId": 15137876, "logid": "a2815ab2-79e8-11e8-b871-6c92bf139ec6",
     // "appId": 10811527}
-    private String parseTxt(JsonNode node) throws IOException {
+    public static  String parseTxt(JsonNode node) throws IOException {
         //private boolean parseTxt(JsonNode node) throws IOException {
         String text="";
         if (node.has("roleCategory") && node.has("content")) {
