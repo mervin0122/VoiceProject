@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.mcc.dao.EmployeeDao">
+
+    <select id="empList"  resultType="com.cn.mcc.bean.Employee">
+        SELECT * FROM employee
+    </select>
+
+    <select id="getEmpById" parameterType="com.cn.mcc.bean.Employee" resultType="com.cn.mcc.bean.Employee">
+        SELECT * FROM employee WHERE   1=1  and  id=#{id}
+    </select>
+
+    <insert id="insertEmployee" parameterType="com.cn.mcc.bean.Employee">
+       INSERR INTO employee(lastName,email,gender,dId) VALUES(#{lastName},#{email},#{gender},#{dId})
+    </insert>
+
+    <update id="updateEmp" parameterType="com.cn.mcc.bean.Employee">
+        UPDATE employee
+        <set>
+            <if test="lastName != null and lastName != ''">
+                lastName=#{lastName},
+            </if>
+            <if test="email != null and email != ''">
+                email=#{email},
+            </if>
+            <if test="gender != null and gender != ''">
+                gender=#{gender},
+            </if>
+            <if test="dId != null and dId != ''">
+                dId=#{dId},
+            </if>
+        </set>
+         where id=#{id}
+    </update>
+
+    <delete id="deleteEmpById" parameterType="String">
+        delete from employee where id=#{id}
+    </delete>
+
+
+</mapper>
