@@ -35,9 +35,7 @@ public class BDVoiceController extends BaseController {
 
     // 音频文件路径
     // private static final String AUDIO_PATH = "./resource/test_1.pcm";
-      public  String parseTxt(JsonNode node) throws IOException {
-         return  new PrintAfterDownloadListener().parseTxt(node);
-      }
+
 
 
     @RequestMapping(value="/voice/vysb",method = RequestMethod.POST)

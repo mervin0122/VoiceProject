@@ -7,6 +7,8 @@ import com.baidu.aip.talker.facade.exception.SendException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BiccTest {
     /*
@@ -18,14 +20,12 @@ public class BiccTest {
         // createConfig第二个参数isCompress: 是否需要传输压缩数据，仅linux x64可以开启
         Session.Config config = Session.createConfig(Session.Config.RoleId.AGENT, false);
         // 下面一段为params的设置，仅需要最终识别结果，详细见文档，
-        /*
-        Map<String, Object> sentenceHandlerParams = new LinkedHashMap<>();
+       /* Map<String, Object> sentenceHandlerParams = new LinkedHashMap<>();
         sentenceHandlerParams.put("agent", "STANDARD_COMPLETED");
         sentenceHandlerParams.put("client", "STANDARD_COMPLETED");
         Map<String, Object> params = new LinkedHashMap<>();
         params.put("sentenceHandler", sentenceHandlerParams);
-        config.setParams(params);
-        */
+        config.setParams(params);*/
         config.setAgentDn(123); // 坐席号, 用户自行定义
 
         try {

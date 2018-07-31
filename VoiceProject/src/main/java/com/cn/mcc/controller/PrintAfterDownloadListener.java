@@ -32,7 +32,7 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
                 if (contentNode.has("category")) {
                     String category = contentNode.get("category").asText();
                     if (category.equals("TXT")) {
-                        text = parseTxt(contentNode); // 识别结果
+                        text = EchoServer.parseTxt(contentNode); // 识别结果
                        // text = BDVoiceController.parseTxt(contentNode); // 识别结果
                     } else if (category.equals("INTENT")) {
                         isSuccessed = parseIntent(contentNode); // 意图结果
@@ -42,10 +42,10 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-     /*   if (!isSuccessed) {
+        if (!isSuccessed) {
             System.out.println("RESULT receive success :" + json);
 
-        }*/
+        }
     }
 
     // 配置文件中 app.scope = brain_ai_talker 生效
@@ -75,7 +75,7 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
     // "triggerTxt": "\u6270\u5230\u60a8\u5462\u8fd9\u8fb9\u662f\u4fe1\u7528\u5361"}, "name": "knowledge_content",
     // "callId": "s1-ASR-34804-1-1530090052495", "userId": 15137876, "logid": "a2815ab2-79e8-11e8-b871-6c92bf139ec6",
     // "appId": 10811527}
-    public static  String parseTxt(JsonNode node) throws IOException {
+ /*   public static  String parseTxt(JsonNode node) throws IOException {
         //private boolean parseTxt(JsonNode node) throws IOException {
         String text="";
         if (node.has("roleCategory") && node.has("content")) {
@@ -96,7 +96,7 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
         }
        // return false;
         return text;
-    }
+    }*/
 
     @Override
     public void onReceiveError(String json) {

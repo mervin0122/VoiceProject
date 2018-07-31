@@ -10,7 +10,7 @@ import java.util.Scanner;
  */
 public class Test {
 
-    private static String fileName = "1481023006148.wav";
+    private static String fileName = "c:\\temp\\test_1.pcm";
     public static void main(String[] args) throws InterruptedException {
 
         Scanner scanner =new Scanner(System.in);
