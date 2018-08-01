@@ -36,22 +36,24 @@ public class RTASRService {
     private static final String SECRET_KEY = "63fda9ad0b5f0756407da547758a9150";
 
     // 请求地址  rtasr.xfyun.cn/v1/ws
-   // private static final String HOST = "rtasr.xfyun.cn/v1/ws";
+    private static final String HOST = "rtasr.xfyun.cn/v1/ws";
 
-   // private static final String BASE_URL = "ws://" + HOST;
+    private static final String BASE_URL = "ws://" + HOST;
 
-   // private static final String ORIGIN = "http://" + HOST;
+    private static final String ORIGIN = "http://" + HOST;
 
     // 音频文件路径
-  //  private static final String AUDIO_PATH = "./resource/test_1.pcm";
+    private static final String AUDIO_PATH = "msc/test_1.pcm";
 
     // 每次发送的数据大小 1280 字节
     private static final int CHUNCKED_SIZE = 1280;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd HH:mm:ss.SSS");
 
+    private static StringBuffer mResult = new StringBuffer();
+
     public static void main(String[] args) throws Exception {
-       /* URI url = new URI(BASE_URL + getHandShakeParams());
+        URI url = new URI(BASE_URL + getHandShakeParams());
         DraftWithOrigin draft = new DraftWithOrigin(ORIGIN);
         CountDownLatch countDownLatch = new CountDownLatch(1);
         MyWebSocketClient client = new MyWebSocketClient(url, draft, countDownLatch);
@@ -77,16 +79,16 @@ public class RTASRService {
                 // 每隔40毫秒发送一次数据
                 Thread.sleep(40);
             }
-
+            System.out.println(getCurrentTimeStr() + "\t发送结束标识完成");
             // 发送结束标识
             send(client,"{\"end\": true}".getBytes());
-            System.out.println(getCurrentTimeStr() + "\t发送结束标识完成");
+            System.out.println("-----------------"+mResult.toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // 等待连接关闭
-        countDownLatch.await();*/
+        countDownLatch.await();
     }
 
     // 生成握手参数
@@ -138,8 +140,9 @@ public class RTASRService {
                 System.out.println(getCurrentTimeStr() + "\t握手成功！sid: " + msgObj.getString("sid"));
             } else if (Objects.equals("result", action)) {
                 // 转写结果
-                contents(getContent(msgObj.getString("data")));
-                System.out.println(getCurrentTimeStr() + "\tresult: " + getContent(msgObj.getString("data")));
+                getContent(msgObj.getString("data"));
+               // System.out.println(getCurrentTimeStr() + "\tresult: " + getContent(msgObj.getString("data")));
+                mResult.append("\n"+getContent(msgObj.getString("data")));
                 //System.out.println("result: " + msgObj.getString("data"));
             } else if (Objects.equals("error", action)) {
                 // 连接发生错误
@@ -189,16 +192,17 @@ public class RTASRService {
 						resultBuilder.append(wStr);
 					}
 				}
-			} 
-		} catch (Exception e) {
+			}
+            //mResult.append("\n"+resultBuilder.toString());
+        } catch (Exception e) {
 			return message;
 		}
 
-		return resultBuilder.toString();
+        return resultBuilder.toString();
     }
 
     // 把转写结果解析为句子
-    public static String contents(String message) {
-        return message.toString();
-    }
+   // public static String contents(String message) {
+     //   return message.toString();
+   // }
 }

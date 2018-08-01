@@ -198,16 +198,6 @@ public class VoiceController extends BaseController{
             // 等待连接关闭
             countDownLatch.await();
 
-
-/*
-            Map<String, String> header = VoiceUtil.constructHeader("raw", "sms16k");
-            String bodyParam = "audio=" + iat.getFilePath();
-            String result = HttpUtil.doPost(WEBIAT_URL, header, bodyParam);
-            JSONObject obj= JSON.parseObject(result);
-            code=obj.getString("code");
-            msg=obj.getString("desc");*/
-           // data=RTASRService.contents();
-           // System.out.println(result);
         }catch (Exception e){
             code= Constants.RESULT_MESSAGE_EXCEPTION;
             msg="转换失败";

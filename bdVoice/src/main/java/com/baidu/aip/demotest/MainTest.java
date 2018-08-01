@@ -2,12 +2,14 @@ package com.baidu.aip.demotest;
 
 import com.baidu.aip.talker.facade.Controller;
 import com.baidu.aip.talker.facade.upload.LogBeforeUploadListener;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 public class MainTest {
-
+    private static StringBuffer mResult = new StringBuffer();
     public static void main(String[] args) throws Exception {
 
         System.out.println("请等待程序正常退出， 否则测试用户将导致10分钟内无法正常使用。");
@@ -23,11 +25,33 @@ public class MainTest {
         BiccTest.asrOne(controller,dir + "/8k_test.pcm");
         // BiccTest.asrOne(controller,dir + "/customer.pcm");
         // BiccTest.asrBoth(controller, dir + "/salesman.pcm", dir + "/customer.pcm");
+        System.out.println(mResult.toString());
         controller.stop();
     }
-    public static String bb(String world){
-        System.out.println("-----------------------------------"+world);
-        return  world;
+
+    public static String parseTxt(JsonNode node) throws IOException {
+        //private boolean parseTxt(JsonNode node) throws IOException {
+        String text="";
+        if (node.has("roleCategory") && node.has("content")) {
+            text = node.get("roleCategory").asText() + " ";
+            if (node.has("extJson")) {
+                JsonNode nodeExt = node.get("extJson");
+                if (nodeExt.has("completed")) {
+                    if (nodeExt.get("completed").asInt() == 1) {
+                      //  text += "临时";
+                    } else if (nodeExt.get("completed").asInt() == 3) {
+                        text += "最终";
+                        mResult.append("\n"+node.get("content").asText());
+                    }
+                }
+            }
+            text += "识别结果：" + node.get("content").asText();
+
+            System.out.println(text);
+            // return true;
+        }
+        // return false;
+        return text;
     }
     /**
      * 默认读取conf/sdk.properties, 您也可以用下面的构造方法，传入Properties类
