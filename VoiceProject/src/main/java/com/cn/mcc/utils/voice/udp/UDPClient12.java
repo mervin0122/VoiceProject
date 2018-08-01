@@ -1,17 +1,18 @@
 package com.cn.mcc.utils.voice.udp;
-import java.io.IOException;
+
 import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.net.DatagramSocket;
-import java.util.Arrays;
+import java.net.InetAddress;
 
 /**
  * Created by yyzc on 2018/8/1.
  *  客户端(发送方)
+ *
+ *  https://blog.csdn.net/lirx_tech/article/details/50996014
  */
 public class UDPClient12 {
     private static final int CHUNCKED_SIZE = 2056;
+    private static final String AUDIO_PATH = "msc/1.txt";
     public static void main(String[] args) {
 
         //String msg = "Hello, World";
@@ -43,22 +44,53 @@ public class UDPClient12 {
                 "123456789123456789123456789123456789123456789123456789123456789123456789123456789==" +
                 "123456789123456789123456789123456789123456789123456789123456789123456789123456789==" +
                 "123456789123456789123456789123456789123456789123456789123456789123456789123456789==" ;
-        byte[] buf = msg.getBytes();
-        System.out.println(buf.length);
+       byte[] buf = msg.getBytes();
+       System.out.println(buf.length);
         try {
-            InetAddress address = InetAddress.getByName("172.24.194.220"); //服务器地址
+            InetAddress address = InetAddress.getByName("192.168.1.103"); //服务器地址172.24.194.220
             int port = 8080; //服务器的端口号
         //创建发送方的数据报信息
-            int len = -1;
-          /*  DatagramPacket dataGramPacket = new DatagramPacket(buf, buf.length, address, port);
+           /* byte[] buf = new byte[CHUNCKED_SIZE];
+            byte[] receiveBuf = new byte[1];
+            int readSize = -1;
+            RandomAccessFile accessFile = new RandomAccessFile(AUDIO_PATH, "r");
+            DatagramPacket dataGramPacket = new DatagramPacket(buf, buf.length, address, port);
+            DatagramSocket socket = new DatagramSocket(); //创建套接字
+            int sendCount = 0;
+            while((readSize = accessFile.read(buf,0,buf.length)) != -1){
+                dataGramPacket.setData(buf, 0, readSize);
+                socket.send(dataGramPacket);
+                // wait server response
+                {
+                    while(true){
+                        dataGramPacket.setData(receiveBuf, 0, receiveBuf.length);
+                        socket.receive(dataGramPacket);
+
+                     *//*   // confirm server receive
+                        if(!UDPUtils.isEqualsByteArray(UDPUtils.successData,receiveBuf,dpk.getLength())){
+                            System.out.println("resend ...");
+                            dataGramPacket.setData(buf, 0, readSize);
+                            socket.send(dataGramPacket);
+                        }else*//*
+                            break;
+                    }
+                }
+
+                System.out.println("send count of "+(++sendCount)+"!");
+            }
+*/
+
+
+         /*   int len = -1;
+            DatagramPacket dataGramPacket = new DatagramPacket(buf, buf.length, address, port);
             DatagramSocket socket = new DatagramSocket(); //创建套接字
             while ((len = buf.length) != -1) {
                 if (len < CHUNCKED_SIZE) {
                     socket.send(dataGramPacket); //通过套接字发送数据
                     break;
                 }
-
-                send(client, bytes);
+                dataGramPacket.setData(buf, 0, buf.length);
+                socket.send(dataGramPacket);
                 // 每隔40毫秒发送一次数据
                 Thread.sleep(40);
             }*/
@@ -73,9 +105,7 @@ public class UDPClient12 {
             String backMsg = new String(backbuf, 0, backPacket.getLength());
             System.out.println("服务器返回的数据为:" + backMsg);
             socket.close();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

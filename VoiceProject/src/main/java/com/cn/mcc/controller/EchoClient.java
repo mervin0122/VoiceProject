@@ -20,7 +20,8 @@ public class EchoClient {
     }
 
     public static void main(String[] args) throws SocketException {
-        new EchoClient().talk("msc/8k_test.pcm");
+        //new EchoClient().talk("msc/8k_test.pcm");
+        new EchoClient().talk("msc/1.txt");
     }
 
     public void talk(String message){
