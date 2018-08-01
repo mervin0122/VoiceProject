@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyyMMdd HH:mm:ss,SSS}][%p][%t][%l] method:%c%n%m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/log/demo.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyyMMdd HH:mm:ss,SSS}][%p][%t][%l] method:%c%n%m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="FILE_ERR" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/log/demo_error.log"/>
+        <param name="Threshold" value="ERROR"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyyMMdd HH:mm:ss,SSS}][%p][%t][%l] method:%c%n%m%n"/>
+        </layout>
+    </appender>
+
+    <root>
+        <priority value="INFO"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="FILE_ERR"/>
+    </root>
+
+</log4j:configuration>
