@@ -1,11 +1,6 @@
 package com.cn.mcc.controller;
 
-import com.baidu.aip.talker.facade.Controller;
-import com.baidu.aip.talker.facade.upload.LogBeforeUploadListener;
-import com.cn.mcc.bean.Iat;
-import com.cn.mcc.utils.HttpClientUtil;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.commons.lang.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -44,9 +39,9 @@ public class EchoServer {
                 DatagramPacket packet = new DatagramPacket(new byte[51200], 51200);
                 datagramSocket.receive(packet);
                 String msg = new String(packet.getData(), 0, packet.getLength());
-                Controller controller = new Controller(new LogBeforeUploadListener(), new PrintAfterDownloadListener(), getProperties());
+                //Controller controller = new Controller(new LogBeforeUploadListener(), new PrintAfterDownloadListener(), getProperties());
 
-                if (StringUtils.isNotEmpty(msg)){
+             /*   if (StringUtils.isNotEmpty(msg)){
                     System.out.println("请等待程序正常退出， 否则测试用户将导致10分钟内无法正常使用。");
                     //  String dir = "src/test/resources/pcm";
 
@@ -61,7 +56,7 @@ public class EchoServer {
                     // BiccTest.asrBoth(controller, dir + "/salesman.pcm", dir + "/customer.pcm");
 
                     controller.stop();
-                }
+                }*/
                 System.out.println(packet.getAddress()+"/"+packet.getPort()+" msg:"+msg);
                 //packet.setData(echo(msg).getBytes());
                 msg=mResult.toString();
