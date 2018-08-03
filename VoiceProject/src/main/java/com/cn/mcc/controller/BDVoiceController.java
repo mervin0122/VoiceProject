@@ -32,7 +32,7 @@ public class BDVoiceController extends BaseController {
     public static final String APP_ID = "11572625";
     public static final String API_KEY = "t5fTe2YN25P36FYMnBTQcUga";
     public static final String SECRET_KEY = "6SgSI55vVqCXOHTamtYwG3yE7A9uKvGX";
-
+    private static String txts;
     // 音频文件路径
     // private static final String AUDIO_PATH = "./resource/test_1.pcm";
 
@@ -82,6 +82,7 @@ public class BDVoiceController extends BaseController {
 
         // 请等待程序正常退出，即end包发送完成。否则测试用户将导致10分钟内无法正常使用。
         BiccTest.asrOne(controller,dir + "/8k_test.pcm");
+        System.out.println("================="+txts);
         // BiccTest.asrOne(controller,dir + "/customer.pcm");
         // BiccTest.asrBoth(controller, dir + "/salesman.pcm", dir + "/customer.pcm");
         controller.stop();
@@ -150,5 +151,28 @@ public class BDVoiceController extends BaseController {
             }
         }
         return properties;
+    }
+    public static  String parseTxt(JsonNode node) throws IOException {
+        //private boolean parseTxt(JsonNode node) throws IOException {
+        String text="";
+        if (node.has("roleCategory") && node.has("content")) {
+            text = node.get("roleCategory").asText() + " ";
+            if (node.has("extJson")) {
+                JsonNode nodeExt = node.get("extJson");
+                if (nodeExt.has("completed")) {
+                    if (nodeExt.get("completed").asInt() == 1) {
+                        text += "临时";
+                    } else if (nodeExt.get("completed").asInt() == 3) {
+                        text += "最终";
+                    }
+                }
+            }
+            text += "识别结果：" + node.get("content").asText();
+            txts=text;
+            System.out.println(text);
+            // return true;
+        }
+        // return false;
+        return text;
     }
 }

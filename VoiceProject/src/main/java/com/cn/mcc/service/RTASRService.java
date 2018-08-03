@@ -45,6 +45,8 @@ public class RTASRService {
     // 音频文件路径
     private static final String AUDIO_PATH = "msc/test_1.pcm";
 
+    private static String txts;
+
     // 每次发送的数据大小 1280 字节
     private static final int CHUNCKED_SIZE = 1280;
 
@@ -74,11 +76,11 @@ public class RTASRService {
                     send(client, bytes = Arrays.copyOfRange(bytes, 0, len));
                     break;
                 }
-
                 send(client, bytes);
                 // 每隔40毫秒发送一次数据
                 Thread.sleep(40);
             }
+            System.out.println("======="+txts);
             System.out.println(getCurrentTimeStr() + "\t发送结束标识完成");
             // 发送结束标识
             send(client,"{\"end\": true}".getBytes());
@@ -132,7 +134,7 @@ public class RTASRService {
         }
 
         @Override
-        public void onMessage(String msg) {
+        public  void onMessage(String msg) {
         	JSONObject msgObj = JSON.parseObject(msg);
             String action = msgObj.getString("action");
             if (Objects.equals("started", action)) {
@@ -141,8 +143,8 @@ public class RTASRService {
             } else if (Objects.equals("result", action)) {
                 // 转写结果
                 getContent(msgObj.getString("data"));
-               // System.out.println(getCurrentTimeStr() + "\tresult: " + getContent(msgObj.getString("data")));
-                mResult.append("\n"+getContent(msgObj.getString("data")));
+                System.out.println(getCurrentTimeStr() + "\tresult: " + getContent(msgObj.getString("data")));
+               // mResult.append("\n"+getContent(msgObj.getString("data")));
                 //System.out.println("result: " + msgObj.getString("data"));
             } else if (Objects.equals("error", action)) {
                 // 连接发生错误
@@ -173,7 +175,7 @@ public class RTASRService {
     }
 
     // 把转写结果解析为句子
-    public static String getContent(String message) {
+    public  static String getContent(String message) {
         StringBuffer resultBuilder = new StringBuffer();
         try {
 			JSONObject messageObj = JSON.parseObject(message);
@@ -191,13 +193,14 @@ public class RTASRService {
 						String wStr = cwArrObj.getString("w");
 						resultBuilder.append(wStr);
 					}
+
 				}
 			}
             //mResult.append("\n"+resultBuilder.toString());
         } catch (Exception e) {
 			return message;
 		}
-
+        txts=resultBuilder.toString();
         return resultBuilder.toString();
     }
 

@@ -45,6 +45,8 @@ public class RTASRTest {
     // 音频文件路径
     private static final String AUDIO_PATH = "msc/test_1.pcm";
 
+    private static  String txts="";
+
     // 每次发送的数据大小 1280 字节
     private static final int CHUNCKED_SIZE = 1280;
 
@@ -72,21 +74,23 @@ public class RTASRTest {
                     send(client, bytes = Arrays.copyOfRange(bytes, 0, len));
                     break;
                 }
-
                 send(client, bytes);
+
                 // 每隔40毫秒发送一次数据
                 Thread.sleep(40);
-            }
 
+            }
             // 发送结束标识
             send(client,"{\"end\": true}".getBytes());
             System.out.println(getCurrentTimeStr() + "\t发送结束标识完成");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // 等待连接关闭
         countDownLatch.await();
+        System.out.println("==============="+txts);
     }
 
     // 生成握手参数
@@ -139,6 +143,7 @@ public class RTASRTest {
             } else if (Objects.equals("result", action)) {
                 // 转写结果
                 System.out.println(getCurrentTimeStr() + "\tresult: " + getContent(msgObj.getString("data")));
+                txts= getContent(msgObj.getString("data"));
                 //System.out.println("result: " + msgObj.getString("data"));
             } else if (Objects.equals("error", action)) {
                 // 连接发生错误

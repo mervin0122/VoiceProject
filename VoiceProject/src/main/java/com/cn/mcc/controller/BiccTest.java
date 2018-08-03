@@ -32,6 +32,7 @@ public class BiccTest {
             Session session = controller.startSession(config);
             registerShutdown(controller, session); // ctrl C 退出时发送end 包
             asr(session, file, true);
+
             session.sendEndSpeech();
             session.destroy();
         } catch (Exception e) {

@@ -11,7 +11,9 @@ import java.util.concurrent.Executors;
 
 import com.baidu.aip.talker.facade.Controller;
 import com.baidu.aip.talker.facade.upload.LogBeforeUploadListener;
+import com.cn.mcc.controller.BiccTest;
 import com.cn.mcc.controller.PrintAfterDownloadListener;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.log4j.Logger;
 
 /**
@@ -38,7 +40,7 @@ public class SocketServerUDP {
 			executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * POOL_SIZE);
 			logger.info("端口号为" + port + "的服务器启动");
 			System.out.println("请等待程序正常退出， 否则测试用户将导致10分钟内无法正常使用。");
-			//controller = new Controller(new LogBeforeUploadListener(), new PrintAfterDownloadListener(), getProperties());
+			controller = new Controller(new LogBeforeUploadListener(), new PrintAfterDownloadListener(), getProperties());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -83,60 +85,10 @@ public class SocketServerUDP {
 		}
 		return properties;
 	}
+
 	public static void main(String[] args) throws Exception {
 		new SocketServerUDP().service();
 	}
 
 }
 
-/**
- * 功能说明：执行具体业务的线程   
- */
-class UdpCallService implements Runnable {
-	Logger logger = Logger.getLogger(UdpCallService.class);
-	private DatagramPacket packet;   
-    private DatagramSocket dataSocket;
-	Controller controller=null;
-    public UdpCallService(DatagramPacket packet,Controller controller) {
-    	try {
-			this.controller=controller;
-    		this.packet = packet;   
-    		// 创建本机可以端口的DatagramSocket   
-            dataSocket = new DatagramSocket();   
-        } catch (SocketException e) {   
-            e.printStackTrace();   
-        }   
-    }    
-
-	public void run() { 	   
-		String getMsg=new String(packet.getData());
-		System.out.println("客户端发送的数据为：" + getMsg);
-		    //返回数据给客户端
-	    String str=getMsg.substring(0,3);
-		String feedback = "";
-		if (str.equals("CRA")){
-			feedback =getMsg.substring(3,19)+ "创建通话成功";
-		}else if (str.equals("SED")){
-			feedback = "语音数据";
-			// BiccTest.asrOne(controller,dir + "msc/8k_test.pcm");
-		}else if (str.equals("END")){
-			feedback = "通话结束，释放接口";
-		}
-		responeSocket(feedback);
-	}
-	
-	//返回消息给客户端
-	public void responeSocket(String message){
-		 // 构造响应数据包   
-        byte[] response = message.toString().getBytes();   
-        DatagramPacket dataPacket = new DatagramPacket(response, response.length, packet.getAddress(), packet.getPort());   
-        try {// 发送   
-            dataSocket.send(dataPacket);   
-        } catch (IOException e) {   
-            e.printStackTrace();   
-        }    
-	}
-
-	
-
-}
