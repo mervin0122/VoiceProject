@@ -2,8 +2,7 @@ package com.cn.mcc.controller;
 
 import com.baidu.aip.talker.facade.download.IAfterDownloadListener;
 import com.baidu.aip.talker.facade.exception.LevelException;
-import com.cn.mcc.controller.udp.SocketServerUDP;
-import com.cn.mcc.controller.udp.UdpCallService;
+import com.cn.mcc.controller.bdudp.UdpCallService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
