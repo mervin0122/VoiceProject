@@ -2,7 +2,7 @@ package com.cn.mcc.controller;
 
 import com.baidu.aip.talker.facade.download.IAfterDownloadListener;
 import com.baidu.aip.talker.facade.exception.LevelException;
-import com.cn.mcc.controller.bdudp.UdpCallService;
+import com.cn.mcc.controller.udp.UdpCallService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -35,7 +35,7 @@ public class PrintAfterDownloadListener implements IAfterDownloadListener {
                     if (category.equals("TXT")) {
                        // text = EchoServer.parseTxt(contentNode); // 识别结果
                        //text = BDVoiceController.parseTxt(contentNode); // 识别结果
-                        text =UdpCallService.parseTxt(contentNode);
+                        text = UdpCallService.parseTxt(contentNode);
 
                     } else if (category.equals("INTENT")) {
                         isSuccessed = parseIntent(contentNode); // 意图结果

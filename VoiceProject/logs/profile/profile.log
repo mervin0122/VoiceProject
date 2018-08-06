@@ -1,3 +1,3 @@
-2018-08-06 09:20:38[m1-java0.3-7940-45151b5e_uploadT-1] TRACE [com.baidu.aip.talker.command.upload.UploadDataEntity] - write to upload stream:Event:speech_start[m1-ASR-7940-1-1533518438519--0-P]duration= 0 , time=1533518438519
-2018-08-06 09:20:48[m1-java0.3-7940-45151b5e_uploadT-1] TRACE [com.baidu.aip.talker.command.upload.UploadDataEntity] - write to upload stream:Event:speech_end[m1-ASR-7940-1-1533518438519--0-P]duration= 0 , time=1533518448512
-2018-08-06 09:21:07[m1-java0.3-7940-45151b5e_uploadT-2] TRACE [com.baidu.aip.talker.command.upload.UploadDataEntity] - write to upload stream:Event:speech_sdk_stop[m1-java0.3-7940-45151b5e--0-P]duration= 0 , time=1533518467436
+2018-08-06 21:44:24[m1-java0.3-5544-f89f2071_uploadT-1] TRACE [com.baidu.aip.talker.command.upload.UploadDataEntity] - write to upload stream:Event:speech_start[m1-ASR-5544-1-1533563064843--0-P]duration= 1 , time=1533563064845
+2018-08-06 21:44:34[m1-java0.3-5544-f89f2071_uploadT-2] TRACE [com.baidu.aip.talker.command.upload.UploadDataEntity] - write to upload stream:Event:speech_end[m1-ASR-5544-1-1533563064843--0-P]duration= 0 , time=1533563074959
+2018-08-06 21:44:41[m1-java0.3-5544-f89f2071_uploadT-2] TRACE [com.baidu.aip.talker.command.upload.UploadDataEntity] - write to upload stream:Event:speech_sdk_stop[m1-java0.3-5544-f89f2071--0-P]duration= 1 , time=1533563081954
