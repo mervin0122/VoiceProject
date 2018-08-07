@@ -36,6 +36,7 @@ public class EchoServer {
     public void service() throws Exception{
         while (true) {
             try {
+
                 DatagramPacket packet = new DatagramPacket(new byte[51200], 51200);
                 datagramSocket.receive(packet);
                 String msg = new String(packet.getData(), 0, packet.getLength());

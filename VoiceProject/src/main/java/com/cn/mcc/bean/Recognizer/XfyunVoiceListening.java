@@ -22,7 +22,7 @@ public class XfyunVoiceListening {
         mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");//简体中文：zh_cn（默认）；美式英文：en_us
         mIat.setParameter(SpeechConstant.ACCENT, "mandarin ");//方言普通话：mandarin(默认);粤 语：cantonese四川话：lmz;河南话：henanese
         //识别完成后在本地保存一个音频文件（目前保存为Windows pcm）
-        mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, "c:\\temp\\655.pcm");
+        mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, "c:\\temp\\0808.pcm");
         //如果不写默认是“1”，“1”是从麦克风读取声音，“-1”是从.pcm音频文件读取声音
         mIat.setParameter(SpeechConstant.AUDIO_SOURCE,"1");
         // 设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理

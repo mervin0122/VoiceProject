@@ -43,7 +43,7 @@ public class RTASRTest {
     private static final String ORIGIN = "http://" + HOST;
 
     // 音频文件路径
-    private static final String AUDIO_PATH = "msc/test_1.pcm";
+    private static final String AUDIO_PATH = "msc/test_1.pcm";//test_1.pcm
 
     private static  String txts="";
 
@@ -144,7 +144,7 @@ public class RTASRTest {
                 // 转写结果
                 System.out.println(getCurrentTimeStr() + "\tresult: " + getContent(msgObj.getString("data")));
                 txts= getContent(msgObj.getString("data"));
-                //System.out.println("result: " + msgObj.getString("data"));
+                System.out.println("result: " + msgObj.getString("data"));
             } else if (Objects.equals("error", action)) {
                 // 连接发生错误
                 throw new RuntimeException(msg);
