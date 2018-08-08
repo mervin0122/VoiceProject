@@ -17,11 +17,11 @@ import java.util.Properties;
  * * Udp多线程回射服务器
  */
 public class BDUdpServerThread extends Thread{
-    private DatagramSocket socket;
+    private static DatagramSocket socket;
     //private byte[] infoBytes;
-    String info = null;
-    private int port;
-    InetAddress ip;
+    static String info = null;
+    private static int port;
+    static InetAddress ip;
     Controller controller=null;
     private static String txts;
 
@@ -70,7 +70,7 @@ public class BDUdpServerThread extends Thread{
         responeSocket(feedback);
     }
     //返回消息给客户端
-    public void responeSocket(String message){
+    public static void responeSocket(String message){
         // 构造响应数据包
         byte[] response = message.toString().getBytes();
         DatagramPacket dataPacket = new DatagramPacket(response, response.length, ip, port);
@@ -98,6 +98,7 @@ public class BDUdpServerThread extends Thread{
             }
             text += "识别结果：" + node.get("content").asText();
             txts=text;
+            responeSocket(txts);
             System.out.println(text);
             // return true;
         }

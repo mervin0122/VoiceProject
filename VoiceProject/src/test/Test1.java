@@ -42,7 +42,30 @@ public class Test1 {
             e.printStackTrace();
         }
     }
-	
+    @Test
+    public  void lexer(){
+        try {
+            Iat iat=new Iat();
+            iat.setFilePath("百度是一家高科技公司");
+            String url ="http://localhost:8080/voice/lexer" ;
+            String res = HttpClientUtil.getHttpData(url, iat,true);
+            System.out.println(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public  void spam(){
+        try {
+            Iat iat=new Iat();
+            iat.setFilePath("今天要去北京，中华人民共和国，起爆装置,苟利国家生死以,你是傻X,双筒猎枪");
+            String url ="http://localhost:8080/voice/spam" ;
+            String res = HttpClientUtil.getHttpData(url, iat,true);
+            System.out.println(res);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Test
     public  void vysb(){
         try {

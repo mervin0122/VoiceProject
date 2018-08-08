@@ -30,8 +30,15 @@ public class SocketClientUDP {
 			// 接收服务端返回的UDP消息
 			byte[] data = new byte[2056];
 			DatagramPacket responsePacket = new DatagramPacket(data,data.length);
-			socket.receive(responsePacket);
-			msg = new String(responsePacket.getData(), 0,responsePacket.getLength());
+			while(true) {
+				socket.receive(responsePacket);
+			   msg = new String(responsePacket.getData(), 0,responsePacket.getLength());
+				System.out.println("服务器返回的数据为:"+msg);
+				if(msg.equals("END")) {
+					break;
+				}
+			}
+
 			socket.close();
 		} catch (UnknownHostException e) {
 			System.err.println("Exception: host could not be found");

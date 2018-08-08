@@ -1,22 +1,27 @@
 package com.cn.mcc.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.aip.speech.AipSpeech;
 import com.baidu.aip.talker.facade.Controller;
 import com.baidu.aip.talker.facade.upload.LogBeforeUploadListener;
 
-import java.io.FileInputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Properties;
 import com.cn.mcc.bean.Iat;
 import com.cn.mcc.utils.BaseController;
 import com.cn.mcc.utils.Constants;
+import com.cn.mcc.utils.HttpUtil;
 import com.cn.mcc.utils.Result;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.Properties;
 
@@ -36,7 +41,12 @@ public class BDVoiceController extends BaseController {
     // 音频文件路径
     // private static final String AUDIO_PATH = "./resource/test_1.pcm";
 
-
+    // 官网获取的 API Key 更新为你注册的
+    String clientId = "p3i3Sfhuls7LwDVrGtwr2VaF";
+    // 官网获取的 Secret Key 更新为你注册的
+    String clientSecret = "e9o8IcSOn9YKmGVofhnIeRj1UKwaDNkr";
+    String url = "https://aip.baidubce.com/rest/2.0/antispam/v2/spam";
+    String url1 = "https://aip.baidubce.com/rpc/2.0/nlp/v1/lexer";
 
     @RequestMapping(value="/voice/vysb",method = RequestMethod.POST)
     @ResponseBody
@@ -130,6 +140,70 @@ public class BDVoiceController extends BaseController {
 
     }
     /**
+     * 文本审核
+     * label:1	暴恐违禁; 2	文本色情; 3	政治敏感
+             4	恶意推广; 5 低俗辱骂; 6	低质灌水
+     */
+    @RequestMapping(value="/voice/spam",method = RequestMethod.POST)
+    @ResponseBody
+    public Result spam(@RequestBody Iat iat) throws IOException,ParseException{
+        String code="0";
+        String msg="";
+        String data="";
+        try{
+            String access_token= getAuth(clientId, clientSecret);
+            //设置请求的编码
+            String  param = "content="+URLEncoder.encode(iat.getFilePath(),"UTF-8");
+            //发送并取得结果
+            data = HttpUtil.post(url, access_token, param);
+            System.out.println(data);
+            com.alibaba.fastjson.JSONObject obj= JSON.parseObject(data);
+            if (StringUtils.isNotEmpty(obj.getString("log_id"))){
+                data=obj.get("result").toString();
+                code="200";
+            }else{
+                data=obj.get("result").toString();
+            }
+
+        }catch (Exception e){
+            code= Constants.RESULT_MESSAGE_EXCEPTION;
+            msg="审核失败";
+        }
+        return  result(code,msg,data);
+    }
+    /**
+     * 词法分析
+     */
+    @RequestMapping(value="/voice/lexer",method = RequestMethod.POST)
+    @ResponseBody
+    public Result lexer(@RequestBody Iat iat) throws IOException,ParseException{
+        String code="0";
+        String msg="";
+        String data="";
+        try{
+
+            String access_token= getAuth(clientId, clientSecret);
+            //设置请求的编码
+            String  param = "{\"text\":\""+iat.getFilePath()+"\"}";
+                  //  "text="+URLEncoder.encode(iat.getFilePath(),"UTF-8");
+            //发送并取得结果
+            data = HttpUtil.postNLP(url1+"?access_token="+access_token, param);
+            System.out.println(data);
+            com.alibaba.fastjson.JSONObject obj= JSON.parseObject(data);
+            if (StringUtils.isNotEmpty(obj.getString("text"))){
+                data=obj.get("items").toString();
+                code="200";
+            }else{
+                data=obj.get("items").toString();
+            }
+
+        }catch (Exception e){
+            code= Constants.RESULT_MESSAGE_EXCEPTION;
+            msg="审核失败";
+        }
+        return  result(code,msg,data);
+    }
+    /**
      * 默认读取conf/sdk.properties, 您也可以用下面的构造方法，传入Properties类
      *
      * Controller controller =
@@ -174,5 +248,67 @@ public class BDVoiceController extends BaseController {
         }
         // return false;
         return text;
+    }
+    public String gettoken() {
+
+        // 官网获取的 API Key 更新为你注册的
+        String clientId = "p3i3Sfhuls7LwDVrGtwr2VaF";
+        // 官网获取的 Secret Key 更新为你注册的
+        String clientSecret = "e9o8IcSOn9YKmGVofhnIeRj1UKwaDNkr";
+        return getAuth(clientId, clientSecret);
+    }
+
+    public static String getAuth(String ak, String sk) {
+        //
+        String authHost = "https://aip.baidubce.com/oauth/2.0/token?";
+        String getAccessTokenUrl = authHost
+                // 1. grant_type为固定参数
+                + "grant_type=client_credentials"
+                // 2. 官网获取的 API Key
+                + "&client_id=" + ak
+                // 3. 官网获取的 Secret Key
+                + "&client_secret=" + sk;
+        try {
+            URL realUrl = new URL(getAccessTokenUrl);
+            // 打开和URL之间的连接
+            HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+            // 获取所有响应头字段
+            //Map<String, List<String>> map = connection.getHeaderFields();
+            // 定义 BufferedReader输入流来读取URL的响应
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String result = "";
+            String line;
+            while ((line = in.readLine()) != null) {
+                result += line;
+            }
+            /**
+             * 返回结果示例
+             */
+            JSONObject jsonObject = new JSONObject(result);
+            String access_token = jsonObject.getString("access_token");
+            return access_token;
+        } catch (Exception e) {
+            System.err.printf("获取token失败！");
+            e.printStackTrace(System.err);
+        }
+        return null;
+    }
+    public String get_text(String content,String url,String accessToken)
+    {
+        String param;
+        String data;
+        try {
+            //设置请求的编码
+            param = "content="+ URLEncoder.encode(content,"UTF-8");
+            //发送并取得结果
+            data = HttpUtil.post(url, accessToken, param);
+            System.out.println(data);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "";
     }
 }

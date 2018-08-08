@@ -19,8 +19,8 @@ import java.util.Properties;
  */
 public class UdpCallService implements Runnable {
 	Logger logger = Logger.getLogger(UdpCallService.class);
-	private DatagramPacket packet;
-    private DatagramSocket dataSocket;
+	private static  DatagramPacket packet;
+    private static DatagramSocket dataSocket;
 	Controller controller=null;
 	private static String txts;
     public UdpCallService(DatagramPacket packet,Controller controller) {
@@ -60,7 +60,7 @@ public class UdpCallService implements Runnable {
 				}
 
 			}
-			 BiccTest.asrOne(controller,"msc/test_1.pcm");
+			 BiccTest.asrOne(controller,"msc/8k_test.pcm");
 			System.out.println("================="+txts);
 			feedback = "【语音数据】"+txts;
 		}else if (str.equals("END")){
@@ -71,7 +71,7 @@ public class UdpCallService implements Runnable {
 	}
 
 	//返回消息给客户端
-	public void responeSocket(String message){
+	public static void responeSocket(String message){
 		 // 构造响应数据包
         byte[] response = message.toString().getBytes();
         DatagramPacket dataPacket = new DatagramPacket(response, response.length, packet.getAddress(), packet.getPort());
@@ -82,7 +82,7 @@ public class UdpCallService implements Runnable {
         }
 	}
 
-	public static  String parseTxt(JsonNode node) throws IOException {
+	public static String parseTxt(JsonNode node) throws IOException {
 		//private boolean parseTxt(JsonNode node) throws IOException {
 		String text="";
 		if (node.has("roleCategory") && node.has("content")) {
@@ -98,8 +98,10 @@ public class UdpCallService implements Runnable {
 				}
 			}
 			text += "识别结果：" + node.get("content").asText();
+			responeSocket(text);
 			txts=text;
 			System.out.println(text);
+
 			// return true;
 		}
 		// return false;

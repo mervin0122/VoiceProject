@@ -33,12 +33,12 @@ import java.util.concurrent.CountDownLatch;
  * * Udp多线程回射服务器
  */
 public class UdpServerThread extends Thread{
-    private DatagramSocket socket;
+    private static  DatagramSocket socket;
     //private byte[] infoBytes;
     String info = null;
-    private int port;
-    InetAddress ip;
-    Controller controller=null;
+    private static int port;
+    static InetAddress ip;
+    static Controller controller=null;
     private static String txts;
 
     // appid 33 5b31b662
@@ -130,7 +130,7 @@ public class UdpServerThread extends Thread{
         }
     }
     //返回消息给客户端
-    public void responeSocket(String message){
+    public static  void responeSocket(String message){
         // 构造响应数据包
         byte[] response = message.toString().getBytes();
         DatagramPacket dataPacket = new DatagramPacket(response, response.length, ip, port);
@@ -188,11 +188,13 @@ public class UdpServerThread extends Thread{
             if (Objects.equals("started", action)) {
                 // 握手成功
                 System.out.println(getCurrentTimeStr() + "\t握手成功！sid: " + msgObj.getString("sid"));
+               // responeSocket(msgObj.getString("sid"));
             } else if (Objects.equals("result", action)) {
                 // 转写结果
                 System.out.println(getCurrentTimeStr() + "\tresult: " + getContent(msgObj.getString("data")));
                 txts= getContent(msgObj.getString("data"));
                 //System.out.println("result: " + msgObj.getString("data"));
+                responeSocket(txts);
             } else if (Objects.equals("error", action)) {
                 // 连接发生错误
                 throw new RuntimeException(msg);

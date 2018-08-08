@@ -36,9 +36,9 @@ public class Server2{
 
 
                 //接收到一个包就就开启一个线程(科大)
-                UdpServerThread thread = new UdpServerThread(dataPacket, socket, buff,controller);
+                //UdpServerThread thread = new UdpServerThread(dataPacket, socket, buff,controller);
                 //百度
-                //BDUdpServerThread thread = new BDUdpServerThread(dataPacket, socket, buff,controller);
+                BDUdpServerThread thread = new BDUdpServerThread(dataPacket, socket, buff,controller);
                 //启动线程
                 thread.start();
             } catch (Exception e) {

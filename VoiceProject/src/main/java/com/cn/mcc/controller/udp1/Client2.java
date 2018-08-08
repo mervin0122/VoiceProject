@@ -41,19 +41,24 @@ public class Client2 {
             client.send(sendPacket);							//阻塞函数
 
             //接收服务器端发来的消息
-            byte[] recvbuf = new byte[256];
+            byte[] recvbuf = new byte[1280];
             DatagramPacket recvPacket = new DatagramPacket(recvbuf, recvbuf.length);
-            client.receive(recvPacket);
-            msg = new String(recvPacket.getData(), 0,recvPacket.getLength());
-            System.out.println("服务器返回的数据为:"+msg);
-
+            while(true) {
+              client.receive(recvPacket);
+              msg = new String(recvPacket.getData(), 0,recvPacket.getLength());
+              System.out.println("服务器返回的数据为:"+msg);
+                if("exit".equals(buf)) {
+                    break;
+               }
+            }
           /*  byte[] buf2 = recvPacket.getData();
             int len = recvPacket.getLength();
             String result = new String(buf2, 0, len);
             System.out.println("发送了：" + result);*/
+          if("exit".equals(buf)) {
+            break;
+          }
 
-            if("exit".equals(buf))
-                break;
         }
         client.close();     //关闭套接字
         in.close();

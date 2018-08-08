@@ -19,7 +19,7 @@ public class SocketClientUDP {
 		try {
 
 			//String str = "hello world ";
-			String str ="END"+GenerateGUID();
+			String str ="SED"+GenerateGUID();
 			byte[] buf = str.getBytes();
 			DatagramSocket socket = new DatagramSocket();
 
